@@ -1,0 +1,6 @@
+:8881 {
+	root * /var/www/app/public
+	php_fastcgi unix//run/php-fpm.sock
+	try_files index.php
+	encode zstd gzip
+}
