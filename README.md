@@ -22,4 +22,4 @@ This repository contains a Docker image for serving a blog with [Hyvor Blogs](ht
     -   In addition, you can set any other Laravel environment variables like Redis, MySQL, etc.
 
 -   PHP
-    -   `PHP_MAX_CHILDREN` - Number of PHP-FPM children to spawn. Default: `5`. Increase this if you have a high traffic website.
+    -   `PHP_MAX_CHILDREN` - Number of PHP-FPM children to spawn. Default: `16`. Increase this if you have a high traffic website.
