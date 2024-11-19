@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build docker image
+        run: docker build -t hb-docker .
+
+      - name: Run tests
+        env:
+          BLOG_SUBDOMAIN: hbdocker1,hbdocker2
+          BLOG_HOSTING_PATH: /blog,/knowledge
+          BLOG_DELIVERY_API_KEY: 123456,789012
+          BLOG_WEBHOOK_SECRET: 123456,789012
+        run: docker run --rm -p 8811:8811 hb-docker php /var/www/app artisan ci-test

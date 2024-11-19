@@ -1,6 +1,11 @@
 <?php
 
 use App\Domain\BlogConfig;
+use Illuminate\Cache\CacheServiceProvider;
+use Illuminate\Filesystem\FilesystemServiceProvider;
+use Illuminate\Foundation\Providers\ConsoleSupportServiceProvider;
+use Illuminate\Foundation\Providers\FoundationServiceProvider;
+use Illuminate\View\ViewServiceProvider;
 
 return [
 
@@ -126,5 +131,17 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+
+    /**
+     * Register only the required service providers
+     */
+    'providers' => [
+        FoundationServiceProvider::class,
+        CacheServiceProvider::class,
+        FilesystemServiceProvider::class,
+        ViewServiceProvider::class,
+        ConsoleSupportServiceProvider::class,
+    ]
 
 ];
