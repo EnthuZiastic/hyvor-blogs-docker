@@ -71,6 +71,6 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --optimize-autoloader --no-dev -
 RUN touch /var/www/app/storage/logs/laravel.log
 RUN chmod -R 777 /var/www/app/storage /var/www/app/bootstrap/cache
 
-EXPOSE 8811
+EXPOSE 80
 
 CMD ["/usr/bin/supervisord"]
