@@ -1,11 +1,9 @@
-FROM dunglas/frankenphp:1.4.4-php8.4 AS frankenphp
+FROM dunglas/frankenphp:1.4.4-php8.4.5-alpine AS frankenphp
 
 WORKDIR /app
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
-RUN install-php-extensions \
-    zip \
-    pcntl
-RUN apt update && apt install -y supervisor
+RUN apk update && apk add --no-cache supervisor curl && \
+    install-php-extensions zip pcntl
 COPY . /app
 
 COPY docker/Caddyfile /etc/caddy/Caddyfile
