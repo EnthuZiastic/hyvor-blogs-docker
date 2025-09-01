@@ -23,4 +23,4 @@ jobs:
           BLOG_WEBHOOK_SECRET: 123456,789012
         run: |
           touch .env
-          docker run --rm -p 8811:8811 hb-docker composer install && /app/vendor/bin/phpunit --testdox
+          docker run --rm hb-docker composer install && ./vendor/bin/phpunit --testdox
