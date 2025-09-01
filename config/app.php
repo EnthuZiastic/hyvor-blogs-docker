@@ -142,6 +142,7 @@ return [
         FilesystemServiceProvider::class,
         ViewServiceProvider::class,
         ConsoleSupportServiceProvider::class,
+        Illuminate\Translation\TranslationServiceProvider::class,
     ]
 
 ];

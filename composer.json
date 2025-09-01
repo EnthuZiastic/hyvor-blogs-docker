@@ -8,6 +8,7 @@
         "php": "^8.2",
         "hyvor/hyvor-blogs-laravel": "^0.0.3",
         "laravel/framework": "^11.9",
+        "laravel/octane": "^2.12",
         "laravel/tinker": "^2.9"
     },
     "require-dev": {
