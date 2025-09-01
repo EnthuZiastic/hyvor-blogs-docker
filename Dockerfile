@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1.4.4-php8-alpine AS frankenphp
+FROM dunglas/frankenphp:1-php8.4-alpine AS frankenphp
 
 WORKDIR /app
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer

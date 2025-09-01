@@ -1,7 +1,8 @@
 #!/bin/sh
 
+# Laravel optimization
 php /app/artisan optimize
 
-export LOG_LEVEL=${LOG_LEVEL:-"ERROR"}
-
-/usr/bin/supervisord
+# Start supervisord with explicit config and debug output
+echo "Starting supervisord..."
+exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
