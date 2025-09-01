@@ -3,6 +3,7 @@ FROM dunglas/frankenphp:1.4.4-php8.4 AS frankenphp
 WORKDIR /app
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 RUN install-php-extensions \
+    zip \
     pcntl
 RUN apt update && apt install -y supervisor
 COPY . /app

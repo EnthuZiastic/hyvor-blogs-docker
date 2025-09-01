@@ -2,9 +2,11 @@
 
 use App\Domain\BlogConfig;
 use Illuminate\Cache\CacheServiceProvider;
+use Illuminate\Database\DatabaseServiceProvider;
 use Illuminate\Filesystem\FilesystemServiceProvider;
 use Illuminate\Foundation\Providers\ConsoleSupportServiceProvider;
 use Illuminate\Foundation\Providers\FoundationServiceProvider;
+use Illuminate\Queue\QueueServiceProvider;
 use Illuminate\View\ViewServiceProvider;
 
 return [
@@ -143,6 +145,8 @@ return [
         ViewServiceProvider::class,
         ConsoleSupportServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
+        DatabaseServiceProvider::class,
+        QueueServiceProvider::class,
     ]
 
 ];

@@ -21,4 +21,6 @@ jobs:
           BLOG_HOSTING_PATH: /blog,/knowledge
           BLOG_DELIVERY_API_KEY: 123456,789012
           BLOG_WEBHOOK_SECRET: 123456,789012
-        run: docker run --rm -p 8811:8811 hb-docker php /var/www/app artisan ci-test
+        run: |
+          touch .env
+          docker run --rm hb-docker composer install && ./vendor/bin/phpunit
