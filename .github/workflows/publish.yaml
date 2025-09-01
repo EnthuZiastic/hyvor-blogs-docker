@@ -9,13 +9,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+
+      - name: Debug credentials
+        run: |
+          echo "Username: ${{ vars.DOCKERHUB_USERNAME }}"
+          echo "Token length: ${#DOCKERHUB_TOKEN}"
+        env:
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
-          username: ${{ secrets.HYVOR_ORG_DOCKERHUB_USERNAME }}
-          password: ${{ secrets.HYVOR_ORG_DOCKERHUB_TOKEN }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
         uses: docker/build-push-action@v4
@@ -24,5 +31,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            hyvor/hyvor-blogs-docker:${{ github.ref_name }}
-            hyvor/hyvor-blogs-docker:latest
+            enthupratik/hyvor-blogs-docker:${{ github.ref_name }}
+            enthupratik/hyvor-blogs-docker:latest
