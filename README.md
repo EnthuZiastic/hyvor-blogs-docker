@@ -35,8 +35,8 @@ docker run -d \
     -   `CACHE_STORE` - The cache store to use. Default: `file`.
     -   In addition, you can set any other Laravel environment variables like Redis, MySQL, etc.
 
--   PHP
-    -   `PHP_MAX_CHILDREN` - Number of PHP-FPM children to spawn. Default: `16`. Increase this if you have a high traffic website.
+- Caddy
+  - `LOG_LEVEL` - The log level for Caddy. Default: `INFO` or `ERROR` (default).
 
 ## Examples
 

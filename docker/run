@@ -1,0 +1,7 @@
+#!/bin/sh
+
+php /app/artisan optimize
+
+export LOG_LEVEL=${LOG_LEVEL:-"ERROR"}
+
+/usr/bin/supervisord

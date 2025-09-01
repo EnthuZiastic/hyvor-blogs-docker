@@ -1,6 +1,23 @@
+# Taken from here:
+# https://github.com/laravel/octane/blob/2.x/src/Commands/stubs/Caddyfile
+# ENV variables are coming from here: https://github.com/laravel/octane/blob/2.x/src/Commands/StartFrankenPhpCommand.php#L92
+
+{
+	frankenphp {
+		worker "/app/public/frankenphp-worker.php" {$CADDY_SERVER_WORKER_COUNT}
+	}
+}
+
 :80 {
-	root * /var/www/app/public
-	php_fastcgi unix//run/php-fpm.sock
-	try_files index.php
-	encode zstd gzip
+	root * /app/public
+    encode zstd gzip
+    php_server {
+       file_server off
+       try_files frankenphp-worker.php
+    }
+    log {
+        output stderr
+        format console
+        level {$CADDY_SERVER_LOG_LEVEL}
+    }
 }
