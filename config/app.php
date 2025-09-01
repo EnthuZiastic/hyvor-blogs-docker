@@ -145,6 +145,8 @@ return [
         ViewServiceProvider::class,
         ConsoleSupportServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
+        DatabaseServiceProvider::class,
+        QueueServiceProvider::class,
     ]
 
 ];
