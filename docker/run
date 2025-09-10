@@ -1,8 +1,20 @@
-#!/bin/sh
+#!/bin/bash
+
+# Set environment variables for better Alpine compatibility
+export PYTHONUNBUFFERED=1
+export LOG_LEVEL=${LOG_LEVEL:-"error"}
+
+# Ensure required directories exist
+mkdir -p /var/run /var/log/supervisor
 
 # Laravel optimization
+echo "Running Laravel optimization..."
 php /app/artisan optimize
 
-# Start supervisord with explicit config and debug output
-echo "Starting supervisord..."
+# Verify supervisord configuration
+echo "Verifying supervisord configuration..."
+/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf -t
+
+# Start supervisord with explicit config and proper logging
+echo "Starting supervisord with FrankenPHP..."
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

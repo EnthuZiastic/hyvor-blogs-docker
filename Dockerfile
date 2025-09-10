@@ -2,8 +2,20 @@ FROM dunglas/frankenphp:1.4.4-php8.4.5-alpine AS frankenphp
 
 WORKDIR /app
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
-RUN apk update && apk add --no-cache supervisor curl && \
+
+# Install Alpine-specific dependencies including python3 for supervisor
+RUN apk update && apk add --no-cache \
+    supervisor \
+    python3 \
+    py3-pip \
+    curl \
+    bash && \
     install-php-extensions zip pcntl
+
+# Create supervisor configuration directory (missing in Alpine by default)
+RUN mkdir -p /etc/supervisor/conf.d && \
+    mkdir -p /var/log/supervisor
+
 COPY . /app
 
 COPY docker/Caddyfile /etc/caddy/Caddyfile
@@ -14,7 +26,17 @@ RUN composer install --no-interaction --no-dev --optimize-autoloader --classmap-
 RUN touch /app/storage/logs/laravel.log
 RUN chmod -R 777 /app/storage /app/bootstrap/cache
 
+# Ensure run script is executable and create required runtime directories
+RUN chmod +x /app/run && \
+    mkdir -p /var/run /var/log/supervisor && \
+    chmod 755 /var/run /var/log/supervisor
+
+# Create a non-root user for better security (optional)
+# RUN addgroup -g 1000 -S hyvor && \
+#     adduser -u 1000 -D -S -G hyvor hyvor && \
+#     chown -R hyvor:hyvor /app /var/log/supervisor
+
 EXPOSE 80
 CMD ["/app/run"]
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
   CMD curl -f http://localhost/health || exit 1
