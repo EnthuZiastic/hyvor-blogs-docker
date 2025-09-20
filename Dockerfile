@@ -10,11 +10,23 @@ RUN apk update && apk add --no-cache \
     py3-pip \
     curl \
     bash && \
-    install-php-extensions zip pcntl
+    install-php-extensions zip pcntl opcache
 
 # Create supervisor configuration directory (missing in Alpine by default)
 RUN mkdir -p /etc/supervisor/conf.d && \
     mkdir -p /var/log/supervisor
+
+# Configure PHP OPcache for optimal performance
+RUN echo 'opcache.enable=1' >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo 'opcache.enable_cli=1' >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo 'opcache.memory_consumption=256' >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo 'opcache.interned_strings_buffer=16' >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo 'opcache.max_accelerated_files=10000' >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo 'opcache.revalidate_freq=2' >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo 'opcache.fast_shutdown=1' >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo 'opcache.validate_timestamps=1' >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo 'opcache.save_comments=1' >> /usr/local/etc/php/conf.d/opcache.ini && \
+    echo 'opcache.enable_file_override=1' >> /usr/local/etc/php/conf.d/opcache.ini
 
 COPY . /app
 
